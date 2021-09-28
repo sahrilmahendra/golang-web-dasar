@@ -20,6 +20,7 @@ func main() {
 	mux.HandleFunc("/product", handler.ProductHandler)
 	mux.HandleFunc("/post-get", handler.PostGet)
 	mux.HandleFunc("/form", handler.Form)
+	mux.HandleFunc("/process", handler.Process)
 
 	// mux.HandleFunc("/profile", func(rw http.ResponseWriter, r *http.Request) {
 	// 	rw.Write([]byte("Moch. Syahryil Mahendra | Web Developer"))

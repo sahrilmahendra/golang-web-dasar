@@ -109,3 +109,36 @@ func Form(rw http.ResponseWriter, r *http.Request) {
 	}
 	http.Error(rw, "sedang terjadi Error", http.StatusBadRequest)
 }
+
+func Process(rw http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			log.Println(err)
+			http.Error(rw, "sedang terjadi Error", http.StatusInternalServerError)
+			return
+		}
+		name := r.Form.Get("name")
+		message := r.Form.Get("message")
+
+		data := map[string]interface{}{
+			"name":    name,
+			"message": message,
+		}
+
+		tmpl, err := template.ParseFiles(path.Join("views", "result.html"), path.Join("views", "layout.html"))
+		if err != nil {
+			log.Println(err)
+			http.Error(rw, "sedang terjadi Error", http.StatusInternalServerError)
+			return
+		}
+
+		err = tmpl.Execute(rw, data)
+		if err != nil {
+			log.Println(err)
+			http.Error(rw, "sedang terjadi Error", http.StatusInternalServerError)
+			return
+		}
+		return
+	}
+}
