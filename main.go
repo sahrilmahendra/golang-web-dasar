@@ -18,10 +18,15 @@ func main() {
 	mux.HandleFunc("/hello", handler.HelloHandler)
 	mux.HandleFunc("/sahril", handler.SahrilHandler)
 	mux.HandleFunc("/product", handler.ProductHandler)
+	mux.HandleFunc("/post-get", handler.PostGet)
+	mux.HandleFunc("/form", handler.Form)
 
 	// mux.HandleFunc("/profile", func(rw http.ResponseWriter, r *http.Request) {
 	// 	rw.Write([]byte("Moch. Syahryil Mahendra | Web Developer"))
 	// })
+
+	FileServer := http.FileServer(http.Dir("css"))
+	mux.Handle("/static/", http.StripPrefix("/static", FileServer))
 
 	log.Println("Starting web on port 8080")
 
